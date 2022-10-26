@@ -4,7 +4,7 @@ from flask import Flask, jsonify, request, render_template
 import pickle
 
 app = Flask(__name__)
-model = pickle.load(open("model.pkl", "rb"))
+model = pickle.load(open("modelo1.pkl", "rb"))
 
 
 @app.route("/")
@@ -15,20 +15,20 @@ def home():
 @app.route("/predict", methods=["POST"])
 def predict():
 
-    features = [int(x) for x in request.form.values()]
+    features = [float(x) for x in request.form.values()]
     final_features = [np.array(features)]
     pred = model.predict(final_features)
     output = pred[0]
-    p = output
 
-    if(p == 0):
+    if(output == 0.0):
         text = "Você preenche os requisitos para não possuir diabetes, mesmo assim "
-    elif(p == 1):
+    elif(output == 1.0):
         text = "Você tem tendência a possuir pré-diabetes, "
     else:
         text = "Você tem tendência a possuir diabetes, "
 
-    return render_template("index.html", prediction_text="DIAGNÓSTICO: " + text + "procure um médico ou uma unidade de saúde.")
+    return render_template("index.html", prediction_text="DIAGNOSTICO: " + text + "procure um medico ou uma unidade de saude.")
+
 
 @app.route("/api", methods=["POST"])
 def results():
