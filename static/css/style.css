@@ -45,6 +45,7 @@ select {
   -o-transition: box-shadow 0.5s ease;
   -ms-transition: box-shadow 0.5s ease;
   transition: box-shadow 0.5s ease;
+  cursor: pointer;
 }
 
 button {
@@ -67,6 +68,7 @@ button {
   -o-transition: box-shadow 0.5s ease;
   -ms-transition: box-shadow 0.5s ease;
   transition: box-shadow 0.5s ease;
+  cursor: pointer;
 
 }
 
@@ -78,60 +80,6 @@ h4 {
   color: #fff;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   text-align: justify;
-}
-
-/* navbar */
-nav {
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 100px;
-	width: 100%;
-	z-index: 1;
-	background-color: rgb(255, 255, 255);
-	border-bottom: 1px solid #CCC;
-}
-
-nav:after {
-	clear: both;
-	content: "";
-	display: block;
-}
-
-.nav-container {
-	max-width: 1200px;
-	position: relative;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-#logo {
-	width: 50px;
-	height: 50px;
-	margin-top: 25px;
-}
-
-.nav-container ul {
-	float: right;
-	height: 100px;
-	line-height: 100px;
-	margin: 0;
-}
-
-.nav-container ul li {
-	list-style: none;
-	float: left;
-	margin: 0 15px;
-}
-
-.nav-container li a {
-	text-decoration: none;
-	color: #666;
-	transition: .5s;
-}
-
-.nav-container li a:hover {
-	color: #3381f3;
 }
 
 /* navbar */
@@ -187,6 +135,8 @@ nav:after {
 .nav-container li a:hover {
 	color:#4b0082;
 }
+
+/* navbar */
 
 .footer{
 	text-align:center;
