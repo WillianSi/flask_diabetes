@@ -11,49 +11,56 @@
       font-family: 'Open Sans', sans-serif;
       background: url(../static/img/diabetiMedi.png) no-repeat center center fixed;
       background-size: cover;
-      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     nav {
       background-color: #00bfff;
-      padding: 10px 20px;
+      padding: 5px 15px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     nav img {
-      height: 50px;
+      height: 40px;
     }
     nav a {
       text-decoration: none;
       color: #fff;
       font-weight: 600;
-      margin-left: 15px;
+      margin-left: 10px;
+      font-size: 14px;
+    }
+    .main-content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .container {
-      background-color: rgba(255, 255, 255, 0.9);
-      max-width: 500px;
-      margin: 50px auto;
-      padding: 30px;
+      background-color: rgba(255, 255, 255, 0.95);
+      width: 90%;
+      max-width: 700px;
+      padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
       text-align: center;
     }
-    .container h2 {
-      margin-bottom: 20px;
-    }
-    .container span {
-      color: #ff4500;
-      font-weight: bold;
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
     form select, form button {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
+      padding: 10px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      font-size: 16px;
+      font-size: 14px;
     }
     form button {
+      grid-column: span 2;
       background-color: #00bfff;
       color: white;
       font-weight: bold;
@@ -65,18 +72,24 @@
       background-color: #009acd;
     }
     h4 {
-      margin-top: 20px;
-      font-size: 18px;
+      margin-top: 15px;
+      font-size: 16px;
       color: #333;
     }
     footer {
       background-color: #00bfff;
       text-align: center;
-      padding: 10px;
+      padding: 8px;
       color: #fff;
-      position: fixed;
-      width: 100%;
-      bottom: 0;
+      font-size: 14px;
+    }
+    @media (max-width: 600px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      form button {
+        grid-column: span 1;
+      }
     }
   </style>
 </head>
@@ -89,62 +102,66 @@
     </div>
   </nav>
 
-  <div class="container">
-    <h2>A maneira mais fácil de testar a probabilidade de <span>diabetes</span></h2>
+  <div class="main-content">
+    <div class="container">
+      <h2>A maneira mais fácil de testar a probabilidade de <span style="color: #ff4500;">diabetes</span></h2>
 
-    <form action="{{ url_for('predict')}}" method="post">
-      <select name="a" required>
-        <option value="">Possui pressão alta?</option>
-        <option value="1.0">Sim</option>
-        <option value="0.0">Não</option>
-      </select>
+      <form action="{{ url_for('predict')}}" method="post">
+        <div class="form-grid">
+          <select name="a" required>
+            <option value="">Possui pressão alta?</option>
+            <option value="1.0">Sim</option>
+            <option value="0.0">Não</option>
+          </select>
 
-      <select name="b" required>
-        <option value="">Possui colesterol alto?</option>
-        <option value="1.0">Sim</option>
-        <option value="0.0">Não</option>
-      </select>
+          <select name="b" required>
+            <option value="">Possui colesterol alto?</option>
+            <option value="1.0">Sim</option>
+            <option value="0.0">Não</option>
+          </select>
 
-      <select name="c" required>
-        <option value="">Teve colesterol nos últimos 5 anos?</option>
-        <option value="1.0">Sim</option>
-        <option value="0.0">Não</option>
-      </select>
+          <select name="c" required>
+            <option value="">Teve colesterol nos últimos 5 anos?</option>
+            <option value="1.0">Sim</option>
+            <option value="0.0">Não</option>
+          </select>
 
-      <select name="d" required>
-        <option value="">Fumou pelo menos 5 maços de cigarros na vida?</option>
-        <option value="1.0">Sim</option>
-        <option value="0.0">Não</option>
-      </select>
+          <select name="d" required>
+            <option value="">Fumou pelo menos 5 maços de cigarros na vida?</option>
+            <option value="1.0">Sim</option>
+            <option value="0.0">Não</option>
+          </select>
 
-      <select name="e" required>
-        <option value="">Já teve derrame?</option>
-        <option value="1.0">Sim</option>
-        <option value="0.0">Não</option>
-      </select>
+          <select name="e" required>
+            <option value="">Já teve derrame?</option>
+            <option value="1.0">Sim</option>
+            <option value="0.0">Não</option>
+          </select>
 
-      <select name="f" required>
-        <option value="">Já teve (DAC) ou (IM)?</option>
-        <option value="1.0">Sim</option>
-        <option value="0.0">Não</option>
-      </select>
+          <select name="f" required>
+            <option value="">Já teve (DAC) ou (IM)?</option>
+            <option value="1.0">Sim</option>
+            <option value="0.0">Não</option>
+          </select>
 
-      <select name="g" required>
-        <option value="">Fez atividade física nos últimos 30 dias?</option>
-        <option value="1.0">Sim</option>
-        <option value="0.0">Não</option>
-      </select>
+          <select name="g" required>
+            <option value="">Fez atividade física nos últimos 30 dias?</option>
+            <option value="1.0">Sim</option>
+            <option value="0.0">Não</option>
+          </select>
 
-      <select name="h" required>
-        <option value="">Consome 1 ou mais frutas ao dia?</option>
-        <option value="1.0">Sim</option>
-        <option value="0.0">Não</option>
-      </select>
+          <select name="h" required>
+            <option value="">Consome 1 ou mais frutas ao dia?</option>
+            <option value="1.0">Sim</option>
+            <option value="0.0">Não</option>
+          </select>
 
-      <button type="submit">Executar</button>
-    </form>
+          <button type="submit">Executar</button>
+        </div>
+      </form>
 
-    <h4>{{ prediction_text }}</h4>
+      <h4 style="color: {{ prediction_color }};">{{ prediction_text }}</h4>
+    </div>
   </div>
 
   <footer>
