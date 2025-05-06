@@ -1,93 +1,154 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Classificador de diabetes</title>
-    <link rel="shortcut icon" href="../static/img/diabetes.png" />
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Classificador de Diabetes</title>
+  <link rel="shortcut icon" href="../static/img/diabetes.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      background: url(../static/img/diabetiMedi.png) no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
+    nav {
+      background-color: #00bfff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav img {
+      height: 50px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      margin-left: 15px;
+    }
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    .container h2 {
+      margin-bottom: 20px;
+    }
+    .container span {
+      color: #ff4500;
+      font-weight: bold;
+    }
+    form select, form button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    form button {
+      background-color: #00bfff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s;
+    }
+    form button:hover {
+      background-color: #009acd;
+    }
+    h4 {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+    footer {
+      background-color: #00bfff;
+      text-align: center;
+      padding: 10px;
+      color: #fff;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+  </style>
+</head>
 
-    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css"/>
-    <link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet" type="text/css"/>
-    <link href="https://fonts.googleapis.com/css?family=Hind:300" rel="stylesheet" type="text/css"/>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}"/>
-  </head>
-
-  <body style="background-image: url(../static/img/diabetiMedi.png)">
-    <nav>
-      <div class="nav-container">
-        <a><img id="logo" src="../static/img/diabetes.png" alt="JobFinder" /></a>
-        <ul>
-          <a><img id="logo" src="../static/img/diabetesInfo.png" alt="JobFinder" /></a>
-          <li>
-            <a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/d/diabetes-diabetes-mellitus">Saiba mais</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    
-    <div class="login">
-      <h2>A maneira mais fácil de testar a probabilidade de <span>diabetes</span></h2>
-
-      <!-- Main Input For Receiving Query to our ML -->
-      <form action="{{ url_for('predict')}}" method="post">
-        <select name="a" required="required">
-          <option value="">Possui pressão alta?</option>
-          <option value="1.0">Sim</option>
-          <option value="0.0">Não</option>
-        </select>
-        
-        <select name="b" required="required">
-          <option value="">Possui colesterol alto?</option>
-          <option value="1.0">Sim</option>
-          <option value="0.0">Não</option>
-        </select>
-
-        <select name="c" required="required">
-          <option value="">Teve colesterol nos últimos 5 anos?</option>
-          <option value="1.0">Sim</option>
-          <option value="0.0">Não</option>
-        </select>
-        
-        <select name="d" required="required">
-          <option value="">Fumou pelo menos 5 maços cigarros em toda sua vida?</option>
-          <option value="1.0">Sim</option>
-          <option value="0.0">Não</option>
-        </select>
-
-        <select name="e" required="required">
-          <option value="">Já teve derrame?</option>
-          <option value="1.0">Sim</option>
-          <option value="0.0">Não</option>
-        </select>
-
-        <select name="f" required="required">
-          <option value="">Já teve (DAC) ou (IM)?</option>
-          <option value="1.0">Sim</option>
-          <option value="0.0">Não</option>
-        </select>
-
-        <select name="g" required="required">
-          <option value="">Fez atividade física nos últimos 30 dias?"</option>
-          <option value="1.0">Sim</option>
-          <option value="0.0">Não</option>
-        </select>
-
-        <select name="h" required="required">
-          <option value="">Consome 1 ou mais frutas ao dia?</option>
-          <option value="1.0">Sim</option>
-          <option value="0.0">Não</option>
-        </select>
-        
-        <button type="submit" class="btn btn-primary btn-block btn-large">Executar</button>
-      </form>
-
-      <h4>{{ prediction_text }}</h4>
+<body>
+  <nav>
+    <a href="#"><img src="../static/img/diabetes.png" alt="Logo Diabetes"></a>
+    <div>
+      <a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/d/diabetes-diabetes-mellitus" target="_blank">Saiba mais</a>
     </div>
-    <div class="footer">
-      <footer>
-        <p>Trabalho prático Machine Learning - Flask</p>
-      </footer>
-    </div>
+  </nav>
 
-  </body>
+  <div class="container">
+    <h2>A maneira mais fácil de testar a probabilidade de <span>diabetes</span></h2>
+
+    <form action="{{ url_for('predict')}}" method="post">
+      <select name="a" required>
+        <option value="">Possui pressão alta?</option>
+        <option value="1.0">Sim</option>
+        <option value="0.0">Não</option>
+      </select>
+
+      <select name="b" required>
+        <option value="">Possui colesterol alto?</option>
+        <option value="1.0">Sim</option>
+        <option value="0.0">Não</option>
+      </select>
+
+      <select name="c" required>
+        <option value="">Teve colesterol nos últimos 5 anos?</option>
+        <option value="1.0">Sim</option>
+        <option value="0.0">Não</option>
+      </select>
+
+      <select name="d" required>
+        <option value="">Fumou pelo menos 5 maços de cigarros na vida?</option>
+        <option value="1.0">Sim</option>
+        <option value="0.0">Não</option>
+      </select>
+
+      <select name="e" required>
+        <option value="">Já teve derrame?</option>
+        <option value="1.0">Sim</option>
+        <option value="0.0">Não</option>
+      </select>
+
+      <select name="f" required>
+        <option value="">Já teve (DAC) ou (IM)?</option>
+        <option value="1.0">Sim</option>
+        <option value="0.0">Não</option>
+      </select>
+
+      <select name="g" required>
+        <option value="">Fez atividade física nos últimos 30 dias?</option>
+        <option value="1.0">Sim</option>
+        <option value="0.0">Não</option>
+      </select>
+
+      <select name="h" required>
+        <option value="">Consome 1 ou mais frutas ao dia?</option>
+        <option value="1.0">Sim</option>
+        <option value="0.0">Não</option>
+      </select>
+
+      <button type="submit">Executar</button>
+    </form>
+
+    <h4>{{ prediction_text }}</h4>
+  </div>
+
+  <footer>
+    Trabalho prático Machine Learning - Flask
+  </footer>
+</body>
 </html>
