@@ -21,15 +21,18 @@ def predict():
         output = pred[0]
 
         if output == 0.0:
-            text = "Você preenche os requisitos para não possuir diabetes, mesmo assim "
+            text = "✅ Seus resultados indicam baixo risco de diabetes. Ainda assim, mantenha hábitos saudáveis e consulte profissionais regularmente."
+            color = "green"
         elif output == 1.0:
-            text = "Você tem tendência a possuir pré-diabetes, "
+            text = "⚠️ Seus resultados sugerem um possível risco de pré-diabetes. Considere rever seus hábitos e buscar orientação médica."
+            color = "orange"
         else:
-            text = "Você tem tendência a possuir diabetes, "
+            text = "❗ Seus resultados sugerem um risco elevado de diabetes. Recomendamos procurar avaliação médica o quanto antes."
+            color = "red"
 
-        return render_template("index.html", prediction_text="DIAGNÓSTICO: " + text + "procure um médico ou uma unidade de saúde.")
+        return render_template("index.html", prediction_text=text, prediction_color=color)
     except Exception as e:
-        return render_template("index.html", prediction_text=f"Ocorreu um erro: {e}")
+        return render_template("index.html", prediction_text=f"Ocorreu um erro: {e}", prediction_color="gray")
 
 @app.route("/api", methods=["POST"])
 def results():
